@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import colors from "colors";
-import asyncHandler from "express-async-errors";
+import asyncErrors from "express-async-errors";
 
 const users = [
   {
