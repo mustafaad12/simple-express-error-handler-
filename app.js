@@ -30,8 +30,6 @@ const errorHandling = (err, req, res, next) => {
   let statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   let message = err.message;
 
-  console.log(err.kind);
-
   if (err.name === "CastError" && err.kind === "ObjectId") {
     message = "resources not found";
     statusCode = 404;
@@ -95,6 +93,7 @@ app.get(
   })
 );
 
+// middleware must be below all end points
 app.use([notFound, errorHandling]);
 
 app.listen(3000, () => {
@@ -110,13 +109,13 @@ app.listen(3000, () => {
  3 error handling to deal with errors by passing throw new error
  
  usage
-    1 npm install
+    1 pnpm install
     2 connect mongoose with your mongodb url
     3 run this command (pnpm api) to run the server
     4 test the endpoints before import sample data to the database
-        localhost/api/products => products not found
-        localhost/api/products:id => product not found   note : the id must be actual mongodb id
-        localhost/api/products/1  => CastError  
+        localhost:3000/api/products => products not found
+        localhost:3000/api/products:id => product not found   note : the id must be actual mongodb id
+        localhost:3000/api/products/1  => CastError  
 
     5 get (localhost/import) to import sample data  
 */
