@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import colors from "colors";
-import asyncHandler from "express-async-handler";
+import asyncHandler from "express-async-errors";
 
 const users = [
   {
@@ -69,29 +69,23 @@ app.get("/destroy", async (req, res) => {
 });
 
 //get all users
-app.get(
-  "/api/users",
-  asyncHandler(async (req, res) => {
-    const users = await User.find();
-    if (users.length === 0) {
-      res.status(404);
-      throw new Error("products is empty");
-    }
-    res.send(users);
-  })
-);
+app.get("/api/users", async (req, res) => {
+  const users = await User.find();
+  if (users.length === 0) {
+    res.status(404);
+    throw new Error("products is empty");
+  }
+  res.send(users);
+});
 
 //get single user
-app.get(
-  "/api/users/:id",
-  asyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      throw new Error("product not found");
-    }
-    res.send(users);
-  })
-);
+app.get("/api/users/:id", async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) {
+    throw new Error("product not found");
+  }
+  res.send(users);
+});
 
 // middleware must be below all end points
 app.use([notFound, errorHandling]);
@@ -104,7 +98,7 @@ app.listen(3000, () => {
  simple error handling
 
  requirenments 
- 1 express-async-handler to avoid using try-catch block
+ 1 express-async-errors to avoid using try-catch block
  2 not found middleware called if no others middleware catch the error such as wrong url
  3 error handling to deal with errors by passing throw new error
  
