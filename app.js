@@ -111,5 +111,5 @@ app.listen(3000, () => {
         localhost:3000/api/products:id => product not found   note : the id must be actual mongodb id
         localhost:3000/api/products/1  => CastError  
 
-    5 get (localhost/import) to import sample data  
+    5 get (localhost:3000/import) to import sample data  
 */
